@@ -1,0 +1,11 @@
+# Raw and large intermediate data (recreated by the scripts)
+data/raw/
+data/processed/combined_raw.csv
+data/processed/clean.csv
+data/processed/revisions_superseded.csv
+reports/rvdss.db
+
+# Python / OS
+__pycache__/
+*.pyc
+.DS_Store
