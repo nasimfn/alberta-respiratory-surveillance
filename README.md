@@ -116,8 +116,11 @@ python src/07_data_dictionary.py
 python src/08_summary_pdf.py
 ```
 
-The pipeline was rerun from an empty `data/processed/` and `reports/` folder and completed without errors.
-There are no manual steps and no random components, so the same input gives the same output.
+Reproducibility check: the repository was cloned fresh and all nine scripts were run in order from the
+instructions above. They completed without errors, and the Alberta table, QA summary, cleaning log, SQL
+results and data dictionary were identical to the original outputs. There are no manual steps and no
+random components. The source compilation may be updated over time, so rerunning later could download
+different data.
 
 ## Repository layout
 
