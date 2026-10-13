@@ -69,7 +69,7 @@ for prefix, virus in VIRUS_NOTES.items():
         DESCRIPTIONS[f"{prefix}_pct_positive"] = (
             f"Percent of {virus} tests that were positive.", DERIVED,
             f"{prefix}_positive_tests / {prefix}_tests * 100, rounded to 2 decimals. "
-            "Blank when tests are 0 or missing. The source file has no percentage columns.")
+            "Blank when tests are 0 or missing. The file used (respiratory_detections.csv) has no percentage columns.")
 
 DESCRIPTIONS["flua_positive_tests"] = ("Number of specimens positive for influenza A in the week.", SRC,
                                        "Whole number. Positives greater than tests are set to blank (QA check C12).")

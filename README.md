@@ -8,6 +8,8 @@ surveillance tables, SQL queries and report charts.
 use any Alberta Health or Government of Alberta internal data, and nothing here is an official
 surveillance product.
 
+![Alberta RSV % positive, with the flagged period shaded](reports/figures/04_rsv_data_quality_flag.png)
+
 ## Why this project
 
 Surveillance reporting is only as reliable as the data behind it. The aim here was to practise the part
@@ -24,8 +26,12 @@ writing those decisions down, and making the whole process repeatable by someone
 - **Spot check:** Alberta values for the week ending 2022-04-30 were compared with PHAC's published
   report for that week (flu tested 2,592, flu A positive 227, RSV tested 1,021, RSV positive 90) and matched.
   Only one week was checked, so this supports but does not prove the compilation is accurate.
-- **Not redistributed:** raw data is downloaded by `src/00_download_data.py`, not stored in this repository.
-  Check the source's terms of use before reusing it.
+- **Licence and attribution:** PHAC publishes the RVDSS data under the
+  [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada).
+  *Contains information licensed under the Open Government Licence – Canada.* The compilation above
+  (maintained by GitHub user `dajmcdon`) had no licence file or licence statement when checked, so its
+  files are not copied into this repository. `src/00_download_data.py` downloads them. Derived outputs
+  (Alberta weekly table, QA reports, SQL results, charts) are included.
 - **Official files:** PHAC's current national file and data dictionary were reviewed for reference.
   The national lab file available at the time held only the first weeks of the 2026-27 season, so the
   historical compilation was used for this analysis.
@@ -92,8 +98,9 @@ Each decision is a named setting at the top of `src/03_clean.py`, so it can be c
   read as case counts.
 - Alberta's own respiratory dashboard may use different definitions. This project did not assume the
   two match, and it does not reproduce Alberta's dashboard.
-- Percent positive is recomputed here from counts (positives divided by tests). The source file has no
-  percentage columns.
+- Percent positive is recomputed here from counts (positives divided by tests). The file used
+  (`respiratory_detections.csv`) has no percentage columns; the compilation's separate
+  `positive_tests.csv` has regional percentages, which this project did not use.
 - Data ends with the 2024-25 season. Values can be revised after publication.
 - The RSV zeros for 2017-18 to 2020-21 appear in tables and charts as published; read them with the flag.
 - Influenza subtype counts can exceed the Influenza A total because PHAC notes that some labs subtype
@@ -158,4 +165,4 @@ The analytical decisions listed above were reviewed and chosen by the author.
 
 ## Author
 
-Nasim Feizinazhad
+Nasim Feizinazhad ([github.com/nasimfn](https://github.com/nasimfn))

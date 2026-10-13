@@ -15,7 +15,7 @@ from reportlab.platypus import (Image, KeepTogether, Paragraph, SimpleDocTemplat
                                 TableStyle)
 
 # ----------------------------------------------------------------------------
-GITHUB_URL = ""  # e.g. "https://github.com/your-username/alberta-respiratory-surveillance"
+GITHUB_URL = "https://github.com/nasimfn/alberta-respiratory-surveillance"
 # ----------------------------------------------------------------------------
 
 OUT = Path("docs/Project_Summary_Nasim_Feizinazhad.pdf")
@@ -159,7 +159,7 @@ def footer(canvas, doc):
     canvas.setFont("Helvetica", 7.5)
     canvas.setFillColor(GREY)
     canvas.drawString(0.8 * inch, 0.5 * inch,
-                      "Nasim Feizinazhad | Supporting document: Surveillance Data Coordinator (Requisition 87695)")
+                      "Nasim Feizinazhad | Supporting document: Surveillance Data Coordinator")
     canvas.drawRightString(letter[0] - 0.8 * inch, 0.5 * inch, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -170,7 +170,7 @@ def main():
                             topMargin=0.65 * inch, bottomMargin=0.8 * inch,
                             title="Alberta Respiratory Virus Surveillance: Data Quality and Reporting Pipeline",
                             author="Nasim Feizinazhad")
-    link = (f'Code and documentation: <font color="#1f3a5f">{GITHUB_URL}</font>' if GITHUB_URL
+    link = (f'Code and documentation: <link href="{GITHUB_URL}" color="#1f3a5f">{GITHUB_URL}</link>' if GITHUB_URL
             else "Code and documentation: (GitHub link to be added)")
 
     s = []
@@ -225,6 +225,8 @@ def main():
         "This project does not reproduce Alberta's own respiratory dashboard, and I did not assume its "
         "definitions match.",
         "Data ends with the 2024-25 season, and published values can be revised.",
+        "Source data is from the Public Health Agency of Canada. Contains information licensed under the "
+        "Open Government Licence \u2013 Canada. Raw data is not copied into the repository; a script downloads it.",
     ])
     s.append(Spacer(1, 4))
     s.append(Paragraph(
