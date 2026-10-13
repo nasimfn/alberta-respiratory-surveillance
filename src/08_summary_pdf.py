@@ -1,5 +1,5 @@
 """
-Step 8: Build the 2-page PDF project summary to attach to a job application.
+Step 8: Build the PDF project summary to attach to a job application.
 
 Set GITHUB_URL below once the repository is published, then rerun this script.
 Output: docs/Project_Summary_Nasim_Feizinazhad.pdf
@@ -34,7 +34,7 @@ cellb = ParagraphStyle("cellb", parent=cell, fontName="Helvetica-Bold")
 h1 = ParagraphStyle("h1", parent=base["Title"], fontName="Helvetica-Bold", fontSize=15.5, leading=19,
                     textColor=NAVY, alignment=TA_LEFT, spaceAfter=2)
 h2 = ParagraphStyle("h2", parent=base["Heading2"], fontName="Helvetica-Bold", fontSize=10.5, leading=13,
-                    textColor=NAVY, spaceBefore=7, spaceAfter=3)
+                    textColor=NAVY, spaceBefore=7, spaceAfter=3, keepWithNext=1)
 bullet = ParagraphStyle("bullet", parent=body, leftIndent=11, bulletIndent=1, spaceAfter=2)
 
 
@@ -46,7 +46,7 @@ def mapping_table():
     rows = [
         ("Posting requirement", "Evidence in this project"),
         ("Standardized, reproducible practices",
-         "Eight scripts rerun end to end from empty folders with no manual steps. Every cleaning "
+         "Nine scripts rerun end to end from empty folders with no manual steps. Every cleaning "
          "decision is a named setting and is logged."),
         ("Data preparation, validation, quality assurance",
          "20 check types (56 rules) run on 68,862 records. Every failing record is saved to an issue log."),
@@ -68,6 +68,55 @@ def mapping_table():
         ("LINEBELOW", (0, 0), (-1, -1), 0.4, colors.HexColor("#c9d1dc")),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("TOPPADDING", (0, 0), (-1, -1), 3), ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+    ]))
+    return t
+
+
+def steps_table():
+    rows = [
+        ("#", "Step", "What it does", "Result"),
+        ("1", "Download and combine",
+         "Downloads 12 season files (2013-14 to 2024-25) from the public RVDSS compilation and stacks them "
+         "into one table without changing any value, so validation sees the data as published.",
+         "68,862 raw rows"),
+        ("2", "Validate",
+         "Runs 20 check types (56 rules) on the raw data: dates, duplicates, impossible counts, label "
+         "problems, missing weeks, all-season zeros. Every failing record is logged.",
+         "Issue log of 7,193 records and a summary table"),
+        ("3", "Clean",
+         "Applies four documented decisions (republished weeks, one broken label, impossible counts, "
+         "suspect zeros). Each is a named setting, and each step logs rows before and after.",
+         "24,828 rows kept; 44,034 older versions set aside; 53 values blanked; 204 values flagged"),
+        ("4", "Build the Alberta table",
+         "Filters to Alberta and lays the data on a complete weekly calendar, so a missing week appears "
+         "as a blank row instead of silently disappearing.",
+         "626 weeks, 8 of them missing"),
+        ("5", "Query in SQL",
+         "Loads the table into SQLite and runs four queries: weekly positivity, peak week per season "
+         "(weeks with fewer than 100 tests excluded), season totals, and completeness.",
+         "4 result tables"),
+        ("6", "Chart",
+         "Draws four charts. Missing weeks show as gaps, flagged weeks are shaded, and each chart states "
+         "its source and latest week.",
+         "4 figures"),
+        ("7", "Document",
+         "Writes a data dictionary for all 31 fields. The script stops with an error if any column is "
+         "undocumented, so the dictionary cannot fall out of date.",
+         "Dictionary, README, this summary"),
+        ("8", "Verify",
+         "Clones the repository fresh and reruns every script from the README.",
+         "Outputs identical to the originals"),
+    ]
+    data = []
+    for i, r in enumerate(rows):
+        st = cellb if i == 0 else cell
+        data.append([Paragraph(c, st) for c in r])
+    t = Table(data, colWidths=[0.25 * inch, 1.2 * inch, 3.6 * inch, 1.8 * inch], repeatRows=1)
+    t.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), LIGHT),
+        ("LINEBELOW", (0, 0), (-1, -1), 0.4, colors.HexColor("#c9d1dc")),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("TOPPADDING", (0, 0), (-1, -1), 2.5), ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
     ]))
     return t
 
@@ -137,6 +186,9 @@ def main():
         "weekly tables, SQL queries and report charts. The aim was to practise the work that comes before "
         "any chart: validating the data, deciding what to do about problems, writing those decisions down, "
         "and making the process repeatable by someone else.", body))
+
+    s.append(Paragraph("How the project works, step by step", h2))
+    s.append(steps_table())
 
     s.append(Paragraph("How it relates to this position", h2))
     s.append(mapping_table())

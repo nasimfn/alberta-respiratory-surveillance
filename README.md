@@ -42,7 +42,7 @@ writing those decisions down, and making the whole process repeatable by someone
 | `src/05_run_sql.py` | Run `sql/queries.sql` (SQLite) and save results to `reports/sql/` |
 | `src/06_charts.py` | Draw the report charts in `reports/figures/` |
 | `src/07_data_dictionary.py` | Build `docs/data_dictionary.md/.csv`; stops with an error if a column is undocumented |
-| `src/08_summary_pdf.py` | Build the 2-page PDF project summary in `docs/` |
+| `src/08_summary_pdf.py` | Build the PDF project summary in `docs/` |
 
 Validation deliberately runs on the **raw** data, before cleaning, so that source problems are found
 and reported rather than quietly fixed.
